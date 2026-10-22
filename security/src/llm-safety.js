@@ -4,6 +4,7 @@
 const BLOCKED_KEYS = new Set([
   'secret',
   'blue_team_secret',
+  'blueteamsecret',
   'api_key',
   'apikey',
   'password',

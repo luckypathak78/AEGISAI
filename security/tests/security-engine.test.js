@@ -51,6 +51,20 @@ test('fails closed for invalid policy requests', () => {
 });
 
 test('sanitizes protected fields without changing original input', () => {
+  test('sanitizes camelCase Blue Team secret fields', () => {
+  const input = {
+    username: 'Lucky',
+    blueTeamSecret: 'TEST_SECRET',
+    normalData: 'hello'
+  };
+
+  const clean = sanitizeForLLM(input);
+
+  assert.equal(clean.username, 'Lucky');
+  assert.equal(Object.hasOwn(clean, 'blueTeamSecret'), false);
+  assert.equal(clean.normalData, 'hello');
+  assert.equal(input.blueTeamSecret, 'TEST_SECRET');
+});
   const input = {
     message: 'hello',
     blue_team_secret: 'TEST_SECRET',
