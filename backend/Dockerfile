@@ -1,7 +1,13 @@
 FROM node:22-alpine
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
+
+COPY backend/package*.json ./backend/
+RUN cd backend && npm install
+
+COPY backend/ ./backend/
+COPY security/ ./security/
+
 EXPOSE 5000
-CMD ["npm", "start"]
+
+CMD ["npm", "--prefix", "backend", "start"]
