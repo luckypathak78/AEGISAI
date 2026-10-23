@@ -1,14 +1,41 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+import React from "react";
+import { createRoot } from "react-dom/client";
+
+import Header from "./components/Header";
+import SystemStatus from "./components/SystemStatus";
+import AttackSimulator from "./components/AttackSimulator";
+import BlueTeamResource from "./components/BlueTeamResource";
+import AuditVerification from "./components/AuditVerification";
+import AuditLog from "./components/AuditLog";
+import LLMSafety from "./components/LLMSafety";
+
+import "./styles/global.css";
 
 function App() {
   return (
-    <main style={{fontFamily:'system-ui', padding:'40px'}}>
-      <h1>AEGISAI</h1>
-      <p>Policy-Driven AI Security Evaluation Sandbox</p>
-      <p>Round-2 foundation is ready. The frontend owner can now build the dashboard against contracts/API_CONTRACT.md.</p>
-    </main>
+    <div className="app-shell">
+      <Header />
+
+      <main>
+        <SystemStatus />
+        <AttackSimulator />
+        <BlueTeamResource />
+        <AuditVerification />
+        <AuditLog />
+        <LLMSafety />
+      </main>
+
+      <footer className="app-footer">
+        <span>AEGISAI</span>
+        <span>AI Governance &amp; Security Control System</span>
+        <span>Round 2 Prototype</span>
+      </footer>
+    </div>
   );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
