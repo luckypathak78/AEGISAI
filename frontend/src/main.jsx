@@ -8,7 +8,7 @@ import BlueTeamResource from "./components/BlueTeamResource";
 import AuditVerification from "./components/AuditVerification";
 import AuditLog from "./components/AuditLog";
 import LLMSafety from "./components/LLMSafety";
-
+import Metrics from "./components/Metrics";
 import "./styles/global.css";
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
         <BlueTeamResource />
         <AuditVerification />
         <AuditLog />
+        <Metrics />
         <LLMSafety />
       </main>
 

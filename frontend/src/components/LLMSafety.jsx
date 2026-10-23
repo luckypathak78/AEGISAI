@@ -61,7 +61,7 @@ function LLMSafety() {
     try {
       // The endpoint is documented in the shared API contract.
       // Confirm the payload and response schema with the backend team.
-      const response = await aegisaiApi.securityTest({
+      const response = await aegisaiApi.sanitizeLLMContext({
         context: parsedContext,
       });
 
@@ -225,13 +225,12 @@ function LLMSafety() {
 
       {result && (
         <div
-          className={`llm-result ${
-            result.type === "blocked"
+          className={`llm-result ${result.type === "blocked"
               ? "llm-result-blocked"
               : result.type === "allowed"
                 ? "llm-result-allowed"
                 : "llm-result-unknown"
-          }`}
+            }`}
           role="status"
           aria-live="polite"
         >
