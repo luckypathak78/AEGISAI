@@ -17,11 +17,6 @@ https://aegisai-frontend-9uoh.onrender.com
 ### ⚙️ Backend API
 
 https://aegisai-backend-cr5c.onrender.com
-
-### 💻 GitHub Repository
-
-https://github.com/luckypathak78/AEGISAI
-
 ---
 
 # 🎯 Problem
@@ -148,6 +143,30 @@ Reason: Protected context cannot be exposed to the client LLM.
 The submitted protected context is not displayed in the result.
 
 ---
+### 🐟 TinyFish Web Investigation
+
+AEGISAI integrates TinyFish as a controlled external web investigation agent.
+
+A user can provide a target URL and an investigation goal. The request is first evaluated by the AEGISAI Security Core before TinyFish is allowed to perform the external investigation.
+
+```text
+User Request
+     │
+     ▼
+AEGISAI Security Core
+     │
+     ├── DENY ──► Block + Audit
+     │
+     └── ALLOW
+          │
+          ▼
+       TinyFish
+          │
+          ▼
+   Investigation Result
+          │
+          ▼
+      Audit Event
 
 ### 🧾 Security Audit Logging
 
@@ -451,6 +470,7 @@ Vite will provide the local frontend URL.
 | `/api/audit/verify`                  | GET    | Verify audit-chain integrity |
 | `/api/metrics`                       | GET    | Retrieve security metrics    |
 | `/api/security/sanitize-llm-context` | POST   | Test protected LLM context   |
+| `/api/tinyfish/investigate`          | POST   | Run an authorized TinyFish web investigation |
 
 ---
 
@@ -589,6 +609,7 @@ SECURITY METRICS
 ✅ Audit integrity verification
 ✅ Security metrics
 ✅ Integrated demo flow
+✅ TinyFish web investigation integration
 ✅ Dockerized backend
 ✅ Live deployment
 
@@ -600,7 +621,6 @@ SECURITY METRICS
 | ----------------- | ------------------------------------------ |
 | 🌐 Live Dashboard | https://aegisai-frontend-9uoh.onrender.com |
 | ⚙️ Backend API    | https://aegisai-backend-cr5c.onrender.com  |
-| 💻 GitHub         | https://github.com/luckypathak78/AEGISAI   |
 
 ---
 
