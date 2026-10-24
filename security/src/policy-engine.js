@@ -50,6 +50,7 @@ const PROTECTED_CONTEXT_ACTIONS = new Set([
 ]);
 
 const SAFE_EVALUATION_ACTION = 'evaluate';
+const TINYFISH_ACTION = 'tinyfish_investigate';
 
 function result(decision, policy, severity, reason) {
   return Object.freeze({
@@ -160,6 +161,21 @@ function evaluatePolicy(request) {
       'Same-boundary evaluation is permitted.'
     );
   }
+
+  // TinyFish investigations are explicitly authorized as a controlled
+// external-web operation from the client LLM boundary to the system.
+if (
+  normalizedAction === TINYFISH_ACTION &&
+  source === 'client-llm' &&
+  normalizedTarget === 'system'
+) {
+  return result(
+    'ALLOW',
+    POLICY_IDS.CROSS_BOUNDARY_AUTHORIZATION,
+    'LOW',
+    'Authorized TinyFish web investigation is permitted.'
+  );
+}
 
   // Unknown and cross-boundary actions are not implicitly trusted.
   return result(
