@@ -9,6 +9,7 @@ import AuditVerification from "./components/AuditVerification";
 import AuditLog from "./components/AuditLog";
 import LLMSafety from "./components/LLMSafety";
 import Metrics from "./components/Metrics";
+import TinyFishInvestigation from "./components/TinyFishInvestigation";
 import "./styles/global.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <main>
         <SystemStatus />
         <AttackSimulator />
+        <TinyFishInvestigation />
         <BlueTeamResource />
         <AuditVerification />
         <AuditLog />
