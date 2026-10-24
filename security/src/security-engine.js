@@ -53,7 +53,8 @@ const AUDITABLE_ACTIONS = new Set([
   'read_protected_context',
   'send_protected_context',
   'include_protected_context',
-  'expose_protected_context'
+  'expose_protected_context',
+  'tinyfish_investigate'
 ]);
 
 function safeAuditTarget(value) {

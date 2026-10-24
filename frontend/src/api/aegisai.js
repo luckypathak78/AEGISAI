@@ -2,7 +2,7 @@ const API_BASE_URL = (
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"
 ).replace(/\/+$/, "");
 
-const REQUEST_TIMEOUT_MS = 8000;
+const REQUEST_TIMEOUT_MS = 30000;
 
 async function request(path, options = {}) {
   const controller = new AbortController();
@@ -128,6 +128,12 @@ export const aegisaiApi = {
 
   sanitizeLLMContext(payload) {
     return request("/api/security/sanitize-llm-context", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  },
+    tinyfishInvestigate(payload) {
+    return request("/api/tinyfish/investigate", {
       method: "POST",
       body: JSON.stringify(payload),
     });

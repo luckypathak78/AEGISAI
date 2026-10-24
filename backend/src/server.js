@@ -4,6 +4,7 @@ require('dotenv').config({ path: require('node:path').resolve(__dirname, '../../
 
 const express = require('express');
 const cors = require('cors');
+const { runTinyFish } = require('./tinyfish');
 
 const {
   evaluateRequest,
@@ -70,6 +71,65 @@ app.post('/api/evaluate', (req, res) => {
     auditEventId: result.auditEventId
   });
 });
+
+app.post('/api/tinyfish/investigate', async (req, res) => {
+  const { url, goal } = req.body || {};
+
+  if (!url || !goal) {
+    return res.status(400).json({
+      ok: false,
+      error: 'url and goal are required'
+    });
+  }
+
+  // Route the TinyFish request through the AEGISAI Security Core first.
+  const securityDecision = evaluateRequest({
+  source: 'client-llm',
+  target: 'system',
+  action: 'tinyfish_investigate',
+  requestId: `REQ-${Date.now()}`
+});
+
+  // Security Core is authoritative.
+  if (securityDecision.decision !== 'ALLOW') {
+    return res.status(403).json({
+      ok: false,
+      decision: securityDecision.decision,
+      policy: securityDecision.policy,
+      severity: securityDecision.severity,
+      reason: securityDecision.reason,
+      auditEventId: securityDecision.auditEventId
+    });
+  }
+
+  try {
+    const result = await runTinyFish({ url, goal });
+
+    return res.json({
+      ok: true,
+      agent: 'TinyFish',
+      decision: securityDecision.decision,
+      policy: securityDecision.policy,
+      auditEventId: securityDecision.auditEventId,
+      url,
+      goal,
+      result
+    });
+  } catch (error) {
+    console.error('TinyFish investigation failed:', error);
+
+    return res.status(502).json({
+      ok: false,
+      agent: 'TinyFish',
+      decision: securityDecision.decision,
+      policy: securityDecision.policy,
+      auditEventId: securityDecision.auditEventId,
+      error: 'TinyFish investigation failed',
+      message: error.message
+    });
+  }
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({
     ok: true,
